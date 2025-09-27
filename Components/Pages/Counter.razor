@@ -9,13 +9,44 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+@if (currentCount > 3)
+{
+    <p>You win!</p>
+}
+
+<ul>
+    @foreach (var item in items)
+    {
+        <li>@item</li>
+    }
+</ul>
+
+<input @onchange="InputChanged" />
+<p>@message</p>
+
+<input @bind="text" />
+<button @onclick="() => text = string.Empty">Clear</button>
+<p>@text</p>
+
+
 @code {
     private int currentCount = 0;
+
+    string message = "z";
+
+    string text = "";
+
+    private List<string> items = new List<string> { "Item 1", "Item 2", "Item 3" };
 
     [Parameter]
     public int IncrementAmount { get; set; } = 1;
     private void IncrementCount()
     {
         currentCount += IncrementAmount;
+    }
+
+    void InputChanged(ChangeEventArgs e)
+    {
+        message = (string)e.Value;
     }
 }
